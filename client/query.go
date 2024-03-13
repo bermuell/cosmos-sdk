@@ -96,7 +96,6 @@ func (ctx Context) queryABCI(req abci.RequestQuery) (abci.ResponseQuery, error) 
 		ChainId: req.ChainId,
 	}
 
-	//req.Path = "sdk-app-2:" + req.Path
 	result, err := node.ABCIQueryWithOptions(context.Background(), req.Path, req.Data, opts)
 	if err != nil {
 		return abci.ResponseQuery{}, err
@@ -131,7 +130,6 @@ func sdkErrorToGRPCError(resp abci.ResponseQuery) error {
 // and path. It returns the result and height of the query upon success
 // or an error if the query fails.
 func (ctx Context) query(path string, key []byte) ([]byte, int64, error) {
-	path = ctx.ChainID + ":" + path
 	resp, err := ctx.queryABCI(abci.RequestQuery{
 		Path:   path,
 		Data:   key,
